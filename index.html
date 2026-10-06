@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RNB PANEL - Gaming Rewards & Digital Services Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --secondary: #ec4899;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-purple: #8b5cf6;
+            --text-dark: #1f2937;
+            --text-medium: #4b5563;
+            --text-light: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f9fafb;
+            --border-light: #e5e7eb;
+            --border-medium: #d1d5db;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background: var(--bg-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .slide-up {
+            animation: slideUp 0.6s ease-out;
+        }
+
+        /* PAGE SECTIONS */
+        .page-section {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 1;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .btn-secondary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        /* SOCIAL ACCESS SECTION */
+        .social-section {
+            min-height: 100vh;
+            padding: 60px 20px;
+            background: var(--bg-light);
+        }
+
+        .social-section h2 {
+            text-align: center;
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .social-section .subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-medium);
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .social-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+
+        .social-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 2px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .social-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-light);
+        }
+
+        .social-card.completed {
+            border-color: var(--accent-green);
+            background: #f0fdf4;
+        }
+
+        .social-status {
+            margin-top: 20px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .social-status.done {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .confirm-btn {
+            margin-top: 15px;
+            padding: 12px 30px;
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .confirm-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .confirm-btn.visible {
+            display: inline-block;
+        }
+
+        .progress-indicator {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            border: 2px solid var(--border-light);
+        }
+
+        .progress-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .progress-row:last-child {
+            border-bottom: none;
+        }
+
+        .progress-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .progress-value {
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+        }
+
+        .progress-value.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .progress-value.done {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .continue-portal-btn {
+            opacity: 0.5;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .continue-portal-btn.enabled {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .social-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+
+        .instagram-icon {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+        }
+
+        .youtube-icon {
+            background: #ff0000;
+            color: white;
+        }
+
+        .social-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .social-card p {
+            color: var(--text-medium);
+            margin-bottom: 25px;
+        }
+
+        .continue-btn {
+            text-align: center;
+        }
+
+        /* NAVIGATION */
+        .nav {
+            background: white;
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--text-medium);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            padding: 60px 20px;
+            min-height: calc(100vh - 70px);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 6vw, 3rem);
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--text-dark);
+        }
+
+        /* PRODUCT GRID */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid var(--border-light);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-light);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .product-price {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .product-status {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .status-available {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-limited {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* FORMS */
+        .form-section {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            border: 2px solid var(--border-light);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-hint {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-top: 8px;
+        }
+
+        .security-notice {
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .security-notice h4 {
+            color: #92400e;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .security-notice p {
+            color: #78350f;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ORDER CONFIRMATION */
+        .confirmation-section {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            background: #d1fae5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: #065f46;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .order-details {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid var(--border-light);
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .order-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .order-detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .order-detail-label {
+            font-weight: 600;
+            color: var(--text-medium);
+        }
+
+        .order-detail-value {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* STATUS TRACKER */
+        .status-tracker {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .status-tracker::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border-light);
+        }
+
+        .status-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .status-circle {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 10px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .status-step.completed .status-circle {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+            color: white;
+        }
+
+        .status-step.active .status-circle {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .status-label {
+            font-size: 0.875rem;
+            color: var(--text-medium);
+            font-weight: 500;
+        }
+
+        /* CODE LIST */
+        .code-list-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid var(--border-light);
+        }
+
+        .code-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .code-filters input,
+        .code-filters select {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 16px;
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .code-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .code-table th {
+            background: var(--bg-light);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-dark);
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .code-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .code-table tr:hover {
+            background: var(--bg-light);
+        }
+
+        .copy-btn {
+            padding: 6px 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-light);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .pagination button {
+            padding: 8px 16px;
+            border: 2px solid var(--border-light);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination button:hover,
+        .pagination button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* SUPPORT SECTION */
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .support-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            border: 2px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .support-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-light);
+        }
+
+        .support-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .support-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                border-bottom: 1px solid var(--border-light);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .social-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .code-filters {
+                flex-direction: column;
+            }
+
+            .code-filters input,
+            .code-filters select {
+                min-width: 100%;
+            }
+
+            .status-tracker {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .status-tracker::before {
+                display: none;
+            }
+        }
+
+        /* UTILITY CLASSES */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- HERO SECTION -->
+    <section id="hero" class="page-section active">
+        <div class="hero">
+            <div class="hero-content">
+                <div class="hero-logo">R</div>
+                <h1>RNB PANEL</h1>
+                <p>Gaming Rewards & Digital Services Portal</p>
+                <button class="btn btn-primary" onclick="showSection('social')">CONTINUE TO PORTAL</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOCIAL ACCESS SECTION -->
+    <section id="social" class="page-section">
+        <div class="social-section">
+            <div class="container">
+                <h2 class="fade-in">MUST FOLLOW TO CONTINUE</h2>
+                <p class="subtitle fade-in">Please follow our official Instagram page and subscribe to our official YouTube channel before continuing to the RNB PANEL portal.</p>
+                
+                <div class="social-cards">
+                    <div class="social-card fade-in" id="instagramCard">
+                        <div class="social-icon instagram-icon">📷</div>
+                        <h3>INSTAGRAM</h3>
+                        <p style="margin-bottom: 20px;">Follow our official Instagram page</p>
+                        <button class="btn btn-secondary" onclick="openInstagram()">OPEN INSTAGRAM</button>
+                        <div class="social-status pending" id="instagramStatus">PENDING</div>
+                        <button class="confirm-btn" id="instagramConfirmBtn" onclick="confirmInstagram()">✓ I HAVE FOLLOWED</button>
+                    </div>
+                    
+                    <div class="social-card fade-in" id="youtubeCard">
+                        <div class="social-icon youtube-icon">▶️</div>
+                        <h3>YOUTUBE</h3>
+                        <p style="margin-bottom: 20px;">Subscribe to our official YouTube channel</p>
+                        <button class="btn btn-secondary" onclick="openYoutube()">OPEN YOUTUBE</button>
+                        <div class="social-status pending" id="youtubeStatus">PENDING</div>
+                        <button class="confirm-btn" id="youtubeConfirmBtn" onclick="confirmYoutube()">✓ I HAVE SUBSCRIBED</button>
+                    </div>
+                </div>
+
+                <div class="progress-indicator fade-in">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: var(--text-dark);">Progress</h3>
+                    <div class="progress-row">
+                        <span class="progress-label">Instagram:</span>
+                        <span class="progress-value pending" id="progressInstagram">Pending</span>
+                    </div>
+                    <div class="progress-row">
+                        <span class="progress-label">YouTube:</span>
+                        <span class="progress-value pending" id="progressYoutube">Pending</span>
+                    </div>
+                    <div class="progress-row">
+                        <span class="progress-label">Access:</span>
+                        <span class="progress-value pending" id="progressAccess">Locked</span>
+                    </div>
+                </div>
+                
+                <div class="continue-btn fade-in">
+                    <button class="btn btn-primary continue-portal-btn" id="continuePortalBtn" onclick="showSection('portal')">CONTINUE TO PORTAL →</button>
+                    <p style="margin-top: 15px; color: var(--text-light); font-size: 0.9rem;" id="followMessage">Complete both steps to unlock the portal</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN PORTAL -->
+    <section id="portal" class="page-section">
+        <nav class="nav">
+            <div class="nav-content">
+                <div class="nav-logo">RNB PANEL</div>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#" class="active" onclick="showTab('home')">Home</a></li>
+                    <li><a href="#" onclick="showTab('diamonds')">Diamonds</a></li>
+                    <li><a href="#" onclick="showTab('redeem')">Redeem Codes</a></li>
+                    <li><a href="#" onclick="showTab('uid')">UID</a></li>
+                    <li><a href="#" onclick="showTab('support')">Support</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="main-content">
+            <!-- HOME TAB -->
+            <div id="home-tab" class="tab-content active">
+                <h2 class="section-title">Welcome to RNB PANEL</h2>
+                <div class="container">
+                    <div class="product-grid">
+                        <div class="product-card">
+                            <img src="diamond.png" alt="Diamonds" class="product-image">
+                            <h3 class="product-title">Game Diamonds</h3>
+                            <p style="color: var(--text-medium); margin-bottom: 20px;">Premium in-game currency for your favorite games</p>
+                            <button class="btn btn-secondary" onclick="showTab('diamonds')">View Diamonds</button>
+                        </div>
+                        <div class="product-card">
+                            <img src="redeem.png" alt="Redeem Codes" class="product-image">
+                            <h3 class="product-title">Redeem Codes</h3>
+                            <p style="color: var(--text-medium); margin-bottom: 20px;">Gift cards and digital codes for various platforms</p>
+                            <button class="btn btn-secondary" onclick="showTab('redeem')">View Codes</button>
+                        </div>
+                        <div class="product-card">
+                            <div style="font-size: 80px; margin: 40px 0;">🎮</div>
+                            <h3 class="product-title">Digital Services</h3>
+                            <p style="color: var(--text-medium); margin-bottom: 20px;">Explore our range of digital services and products</p>
+                            <button class="btn btn-secondary" onclick="showTab('services')">View Services</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIAMONDS TAB -->
+            <div id="diamonds-tab" class="tab-content" style="display:none;">
+                <h2 class="section-title">DIAMONDS</h2>
+                <div class="container">
+                    <div class="product-grid" id="diamondsGrid">
+                        <!-- Diamonds will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- REDEEM CODES TAB -->
+            <div id="redeem-tab" class="tab-content" style="display:none;">
+                <h2 class="section-title">REDEEM CODES</h2>
+                <div class="container">
+                    <div class="product-grid" id="redeemGrid">
+                        <!-- Redeem codes will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- UID TAB -->
+            <div id="uid-tab" class="tab-content" style="display:none;">
+                <h2 class="section-title">ENTER PLAYER UID</h2>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label class="form-label">Enter Player UID</label>
+                        <input type="text" class="form-input" id="uidInput" placeholder="Enter your player UID">
+                        <p class="form-hint">UID is not required for services that do not need player information.</p>
+                    </div>
+                    <button class="btn btn-secondary" style="width: 100%;" onclick="submitUID()">CONTINUE</button>
+                    
+                    <div class="security-notice">
+                        <h4>⚠️ SECURITY NOTICE</h4>
+                        <p>RNB Panel will never ask for your Gmail password, OTP, recovery code, payment PIN or game login password. Only provide the information required for the selected service.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SERVICES TAB -->
+            <div id="services-tab" class="tab-content" style="display:none;">
+                <h2 class="section-title">DIGITAL SERVICES</h2>
+                <div class="container">
+                    <div class="product-grid" id="servicesGrid">
+                        <!-- Services will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUPPORT TAB -->
+            <div id="support-tab" class="tab-content" style="display:none;">
+                <h2 class="section-title">NEED HELP?</h2>
+                <div class="support-grid">
+                    <div class="support-card">
+                        <div class="support-icon" style="background: #dbeafe; color: #1e40af;">💬</div>
+                        <h3>CONTACT SUPPORT</h3>
+                        <p style="color: var(--text-medium); margin-bottom: 20px;">Get help from our support team</p>
+                        <button class="btn btn-secondary">Contact Us</button>
+                    </div>
+                    <div class="support-card">
+                        <div class="support-icon" style="background: #d1fae5; color: #065f46;">📦</div>
+                        <h3>CHECK ORDER</h3>
+                        <p style="color: var(--text-medium); margin-bottom: 20px;">Track your order status</p>
+                        <button class="btn btn-secondary">Track Order</button>
+                    </div>
+                    <div class="support-card">
+                        <div class="support-icon" style="background: #fef3c7; color: #92400e;">⚠️</div>
+                        <h3>REPORT AN ISSUE</h3>
+                        <p style="color: var(--text-medium); margin-bottom: 20px;">Report a problem or bug</p>
+                        <button class="btn btn-secondary">Report Issue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ORDER CONFIRMATION -->
+            <div id="confirmation-tab" class="tab-content" style="display:none;">
+                <div class="confirmation-section">
+                    <div class="success-icon">✓</div>
+                    <h2 class="section-title">YOUR ORDER IS CONFIRMED</h2>
+                    <p style="font-size: 1.1rem; color: var(--text-medium); margin-bottom: 30px;">
+                        Please check your email. Your redeem code will be sent to your registered Gmail address according to the stated delivery timeframe.
+                    </p>
+                    <p style="font-size: 1rem; color: var(--text-dark); font-weight: 600; margin-bottom: 30px;">
+                        We will send your redeem code to your Gmail within 27 hours after successful order/payment verification.
+                    </p>
+                    
+                    <div class="order-details">
+                        <div class="order-detail-row">
+                            <span class="order-detail-label">Order ID</span>
+                            <span class="order-detail-value" id="orderId">RNB-2024-XXXXX</span>
+                        </div>
+                        <div class="order-detail-row">
+                            <span class="order-detail-label">Product</span>
+                            <span class="order-detail-value" id="orderProduct">-</span>
+                        </div>
+                        <div class="order-detail-row">
+                            <span class="order-detail-label">Order Status</span>
+                            <span class="order-detail-value" style="color: var(--accent-green);">CONFIRMED ✓</span>
+                        </div>
+                        <div class="order-detail-row">
+                            <span class="order-detail-label">Delivery Email</span>
+                            <span class="order-detail-value" id="orderEmail">-</span>
+                        </div>
+                        <div class="order-detail-row">
+                            <span class="order-detail-label">Estimated Delivery</span>
+                            <span class="order-detail-value">Within 27 hours</span>
+                        </div>
+                    </div>
+
+                    <div class="status-tracker">
+                        <div class="status-step completed">
+                            <div class="status-circle">✓</div>
+                            <div class="status-label">ORDER CONFIRMED</div>
+                        </div>
+                        <div class="status-step active">
+                            <div class="status-circle">2</div>
+                            <div class="status-label">PROCESSING</div>
+                        </div>
+                        <div class="status-step">
+                            <div class="status-circle">3</div>
+                            <div class="status-label">EMAIL DELIVERY</div>
+                        </div>
+                        <div class="status-step">
+                            <div class="status-circle">4</div>
+                            <div class="status-label">COMPLETED</div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="showTab('home')">BACK TO PORTAL</button>
+                </div>
+            </div>
+
+            <!-- CODE LIST TAB -->
+            <div id="codelist-tab" class="tab-content" style="display:none;">
+                <h2 class="section-title">SAMPLE CODE LIST</h2>
+                <div class="container">
+                    <div class="code-list-container">
+                        <div class="code-filters">
+                            <input type="text" id="codeSearch" placeholder="Search codes..." onkeyup="filterCodes()">
+                            <select id="codeStatus" onchange="filterCodes()">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="used">Used</option>
+                                <option value="expired">Expired</option>
+                            </select>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table class="code-table">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Status</th>
+                                        <th>Value</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="codeTableBody">
+                                    <!-- Codes will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination" id="pagination">
+                            <!-- Pagination will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    <p style="text-align: center; margin-top: 20px; color: var(--text-light); font-size: 0.9rem;">
+                        Note: These are sample/test codes for interface demonstration purposes only.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // CONFIGURATION
+        const CONFIG = {
+            INSTAGRAM_URL: 'https://www.instagram.com/sogeking_w7r/?__pwa=1#',
+            YOUTUBE_URL: 'https://youtube.com/@akshaytec123?si=XkTdECoNTnE-EguB',
+            PLAYER_LOOKUP_URL: 'https://wjsxtt32.mule.page/#home',
+            DELIVERY_TIME: '27 hours'
+        };
+
+        // PRODUCT DATA
+        const diamonds = [
+            { quantity: 500, status: 'available' },
+            { quantity: 1000, status: 'available' },
+            { quantity: 5000, status: 'available' },
+            { quantity: 10000, status: 'available' },
+            { quantity: 20000, status: 'available' },
+            { quantity: 40000, status: 'available' },
+            { quantity: 60000, status: 'available' },
+            { quantity: 70000, status: 'available' }
+        ];
+
+        const redeemCodes = [
+            { value: '$10', status: 'available' },
+            { value: '$25', status: 'available' },
+            { value: '$50', status: 'available' },
+            { value: '$100', status: 'available' },
+            { value: '$200', status: 'available' },
+            { value: '$500', status: 'available' }
+        ];
+
+        const services = [
+            { name: 'Game Top-Up', description: 'Instant game currency top-up', icon: '💎' },
+            { name: 'Gift Card Delivery', description: 'Digital gift cards via email', icon: '🎁' },
+            { name: 'Premium Membership', description: 'Extended premium access', icon: '⭐' },
+            { name: 'Special Offers', description: 'Limited time deals', icon: '🔥' }
+        ];
+
+        // SAMPLE CODES (1000+)
+        const sampleCodes = [];
+        for (let i = 0; i < 1000; i++) {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            const code = `RNB-TEST-${Array.from({length: 4}, () => chars[Math.floor(Math.random() * chars.length)]).join('')}-${Array.from({length: 4}, () => chars[Math.floor(Math.random() * chars.length)]).join('')}`;
+            const statuses = ['active', 'used', 'expired'];
+            const values = ['$10', '$25', '$50', '$100'];
+            sampleCodes.push({
+                code: code,
+                status: statuses[Math.floor(Math.random() * statuses.length)],
+                value: values[Math.floor(Math.random() * values.length)]
+            });
+        }
+
+        // STATE
+        let currentPage = 1;
+        const codesPerPage = 20;
+        let filteredCodes = [...sampleCodes];
+
+        // NAVIGATION FUNCTIONS
+        function showSection(sectionId) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // SOCIAL FOLLOW FUNCTIONS
+        let instagramOpened = false;
+        let youtubeOpened = false;
+        let instagramConfirmed = false;
+        let youtubeConfirmed = false;
+
+        function openInstagram() {
+            window.open(CONFIG.INSTAGRAM_URL, '_blank');
+            instagramOpened = true;
+            
+            // Show confirmation button after a short delay
+            setTimeout(() => {
+                document.getElementById('instagramConfirmBtn').classList.add('visible');
+                document.getElementById('instagramStatus').textContent = 'CLICK CONFIRM WHEN DONE';
+                document.getElementById('instagramStatus').className = 'social-status pending';
+            }, 1000);
+        }
+
+        function confirmInstagram() {
+            instagramConfirmed = true;
+            
+            // Update Instagram card
+            document.getElementById('instagramCard').classList.add('completed');
+            document.getElementById('instagramStatus').textContent = '✓ I HAVE FOLLOWED';
+            document.getElementById('instagramStatus').className = 'social-status done';
+            document.getElementById('instagramConfirmBtn').classList.remove('visible');
+            
+            // Update progress indicator
+            document.getElementById('progressInstagram').textContent = '✓ Completed';
+            document.getElementById('progressInstagram').className = 'progress-value done';
+            
+            checkCompletion();
+        }
+
+        function openYoutube() {
+            window.open(CONFIG.YOUTUBE_URL, '_blank');
+            youtubeOpened = true;
+            
+            // Show confirmation button after a short delay
+            setTimeout(() => {
+                document.getElementById('youtubeConfirmBtn').classList.add('visible');
+                document.getElementById('youtubeStatus').textContent = 'CLICK CONFIRM WHEN DONE';
+                document.getElementById('youtubeStatus').className = 'social-status pending';
+            }, 1000);
+        }
+
+        function confirmYoutube() {
+            youtubeConfirmed = true;
+            
+            // Update YouTube card
+            document.getElementById('youtubeCard').classList.add('completed');
+            document.getElementById('youtubeStatus').textContent = '✓ I HAVE SUBSCRIBED';
+            document.getElementById('youtubeStatus').className = 'social-status done';
+            document.getElementById('youtubeConfirmBtn').classList.remove('visible');
+            
+            // Update progress indicator
+            document.getElementById('progressYoutube').textContent = '✓ Completed';
+            document.getElementById('progressYoutube').className = 'progress-value done';
+            
+            checkCompletion();
+        }
+
+        function checkCompletion() {
+            const continueBtn = document.getElementById('continuePortalBtn');
+            const message = document.getElementById('followMessage');
+            const progressAccess = document.getElementById('progressAccess');
+            
+            if (instagramConfirmed && youtubeConfirmed) {
+                // Both completed - enable continue button
+                continueBtn.classList.add('enabled');
+                message.textContent = '✓ Thank you! You can now continue to the portal';
+                message.style.color = 'var(--accent-green)';
+                progressAccess.textContent = '✓ Ready';
+                progressAccess.className = 'progress-value done';
+            } else {
+                // Still waiting for both
+                continueBtn.classList.remove('enabled');
+                message.textContent = 'Complete both steps to unlock the portal';
+                message.style.color = 'var(--text-light)';
+                progressAccess.textContent = 'Locked';
+                progressAccess.className = 'progress-value pending';
+            }
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            document.getElementById(tabName + '-tab').style.display = 'block';
+            
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            window.scrollTo(0, 0);
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        // POPULATE PRODUCTS
+        function populateDiamonds() {
+            const grid = document.getElementById('diamondsGrid');
+            grid.innerHTML = diamonds.map(d => `
+                <div class="product-card">
+                    <img src="diamond.png" alt="Diamonds" class="product-image">
+                    <h3 class="product-title">${d.quantity.toLocaleString()} Diamonds</h3>
+                    <div class="product-price">FREE</div>
+                    <span class="product-status status-available">Available</span>
+                    <button class="btn btn-secondary" style="width: 100%;" onclick="selectProduct('Diamonds', '${d.quantity}', 'FREE')">Select</button>
+                </div>
+            `).join('');
+        }
+
+        function populateRedeemCodes() {
+            const grid = document.getElementById('redeemGrid');
+            grid.innerHTML = redeemCodes.map(r => `
+                <div class="product-card">
+                    <img src="redeem.png" alt="Redeem Code" class="product-image">
+                    <h3 class="product-title">${r.value} Redeem Code</h3>
+                    <div class="product-price">FREE</div>
+                    <span class="product-status status-available">Available</span>
+                    <button class="btn btn-secondary" style="width: 100%;" onclick="selectProduct('Redeem Code', '${r.value}', 'FREE')">Select</button>
+                </div>
+            `).join('');
+        }
+
+        function populateServices() {
+            const grid = document.getElementById('servicesGrid');
+            grid.innerHTML = services.map(s => `
+                <div class="product-card">
+                    <div style="font-size: 80px; margin: 20px 0;">${s.icon}</div>
+                    <h3 class="product-title">${s.name}</h3>
+                    <p style="color: var(--text-medium); margin-bottom: 15px;">${s.description}</p>
+                    <div class="product-price">FREE</div>
+                    <span class="product-status status-available">Available</span>
+                    <button class="btn btn-secondary" style="width: 100%;" onclick="selectProduct('${s.name}', 'Service', 'FREE')">Continue</button>
+                </div>
+            `).join('');
+        }
+
+        // PRODUCT SELECTION
+        function selectProduct(type, name, price) {
+            sessionStorage.setItem('selectedProduct', JSON.stringify({ type, name, price }));
+            
+            // Check if service requires UID
+            const requiresUID = type === 'Diamonds' || type.includes('Game');
+            const requiresEmail = type === 'Redeem Code' || type.includes('Gift');
+            
+            if (requiresUID) {
+                showTab('uid');
+            } else if (requiresEmail) {
+                showEmailForm();
+            } else {
+                confirmOrder();
+            }
+        }
+
+        function showEmailForm() {
+            const formHTML = `
+                <h2 class="section-title">DELIVERY EMAIL</h2>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label class="form-label">Enter your Gmail address</label>
+                        <input type="email" class="form-input" id="emailInput" placeholder="Enter your Gmail address">
+                        <p class="form-hint">We use this email only to send your order confirmation and eligible digital delivery.</p>
+                    </div>
+                    <div class="security-notice">
+                        <h4>⚠️ SECURITY NOTICE</h4>
+                        <p>We will never ask for your Gmail password, OTP or recovery code.</p>
+                    </div>
+                    <button class="btn btn-secondary" style="width: 100%;" onclick="submitEmail()">CONTINUE</button>
+                </div>
+            `;
+            document.getElementById('home-tab').innerHTML = formHTML;
+            showTab('home');
+        }
+
+        function submitUID() {
+            const uid = document.getElementById('uidInput').value;
+            if (!uid) {
+                alert('Please enter your Player UID');
+                return;
+            }
+            sessionStorage.setItem('playerUID', uid);
+            
+            // Check if email is also needed
+            const product = JSON.parse(sessionStorage.getItem('selectedProduct'));
+            if (product && (product.type === 'Redeem Code' || product.type.includes('Gift'))) {
+                showEmailForm();
+            } else {
+                confirmOrder();
+            }
+        }
+
+        function submitEmail() {
+            const email = document.getElementById('emailInput').value;
+            if (!email || !email.includes('@gmail.com')) {
+                alert('Please enter a valid Gmail address');
+                return;
+            }
+            sessionStorage.setItem('deliveryEmail', email);
+            confirmOrder();
+        }
+
+        function confirmOrder() {
+            const product = JSON.parse(sessionStorage.getItem('selectedProduct')) || { type: 'Product', name: 'Item', price: 'FREE' };
+            const email = sessionStorage.getItem('deliveryEmail') || 'Not provided';
+            const orderId = 'RNB-2024-' + Math.random().toString(36).substr(2, 5).toUpperCase();
+            
+            document.getElementById('orderId').textContent = orderId;
+            document.getElementById('orderProduct').textContent = `${product.type} - ${product.name}`;
+            document.getElementById('orderEmail').textContent = email;
+            
+            showTab('confirmation');
+        }
+
+        // CODE LIST FUNCTIONS
+        function populateCodeTable() {
+            const start = (currentPage - 1) * codesPerPage;
+            const end = start + codesPerPage;
+            const pageCodes = filteredCodes.slice(start, end);
+            
+            const tbody = document.getElementById('codeTableBody');
+            tbody.innerHTML = pageCodes.map(code => `
+                <tr>
+                    <td style="font-family: monospace; font-weight: 600;">${code.code}</td>
+                    <td>
+                        <span class="product-status ${code.status === 'active' ? 'status-available' : 'status-limited'}">
+                            ${code.status.toUpperCase()}
+                        </span>
+                    </td>
+                    <td>${code.value}</td>
+                    <td>
+                        <button class="copy-btn" onclick="copyCode('${code.code}')">Copy</button>
+                    </td>
+                </tr>
+            `).join('');
+            
+            populatePagination();
+        }
+
+        function populatePagination() {
+            const totalPages = Math.ceil(filteredCodes.length / codesPerPage);
+            const pagination = document.getElementById('pagination');
+            
+            let html = '';
+            if (currentPage > 1) {
+                html += `<button onclick="changePage(${currentPage - 1})">Previous</button>`;
+            }
+            
+            for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
+                html += `<button class="${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+            }
+            
+            if (currentPage < totalPages) {
+                html += `<button onclick="changePage(${currentPage + 1})">Next</button>`;
+            }
+            
+            pagination.innerHTML = html;
+        }
+
+        function changePage(page) {
+            currentPage = page;
+            populateCodeTable();
+        }
+
+        function filterCodes() {
+            const search = document.getElementById('codeSearch').value.toLowerCase();
+            const status = document.getElementById('codeStatus').value;
+            
+            filteredCodes = sampleCodes.filter(code => {
+                const matchesSearch = code.code.toLowerCase().includes(search);
+                const matchesStatus = !status || code.status === status;
+                return matchesSearch && matchesStatus;
+            });
+            
+            currentPage = 1;
+            populateCodeTable();
+        }
+
+        function copyCode(code) {
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Code copied to clipboard!');
+            });
+        }
+
+        // INITIALIZE
+        document.addEventListener('DOMContentLoaded', () => {
+            populateDiamonds();
+            populateRedeemCodes();
+            populateServices();
+            populateCodeTable();
+        });
+    </script>
+</body>
+</html>
